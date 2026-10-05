@@ -5,6 +5,14 @@
   become: true
 
   tasks:
+    - name: Show current user
+      command: whoami
+      register: whoami_out
+
+    - name: Debug current user
+      debug:
+        var: whoami_out.stdout
+
     - name: Update and upgrade apt packages
       apt:
         update_cache: yes
