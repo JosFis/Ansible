@@ -1,5 +1,9 @@
 ---
-- name: Container present
-  community.docker.docker_container:
-    name: mycontainer
-    state: present
+- hosts: 
+  - 10.10.10.119
+
+  tasks:
+  - name: Container present
+    community.docker.docker_container:
+      name: homepage
+      state: present
