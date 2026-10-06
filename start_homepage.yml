@@ -4,26 +4,13 @@
   become: true
   
   tasks:
-    - name: Install pip
-      apt:
-        name:
-          - python3-pip
-        state: present
-        
-    - name: Install Docker Python SDK
-      pip:
-        name:
-          - docker
-        state: present
-        
-    - name: Get container information
-      community.docker.docker_host_info:
-        containers: true
-      register: docker_info
-      
-    - name: Start stopped containers
-      community.docker.docker_container:
-        name: "{{ item.Names[0] | regex_replace('^/', '') }}"
-        state: started
-      loop: "{{ docker_info.containers }}"
-      when: not item.State.Running
+    - name: Get all containers
+      shell: docker ps -aq
+      register: containers
+      changed_when: false
+
+    - name: Start all containers
+      command: docker start {{ item }}
+      loop: "{{ containers.stdout_lines }}"
+      register: start_result
+      failed_when: false
