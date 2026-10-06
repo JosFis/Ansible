@@ -3,12 +3,7 @@
   hosts: docker
   become: true
   
-  tasks:
-    - name: Get stopped containers
-      shell: docker ps -aq -f "status=exited"
-      register: containers
-      changed_when: false
-      
+  tasks:      
     - name: Get stopped containers for logging
       shell: docker ps -a --filter "status=exited" --format "{{'{{'}}.ID{{'}}'}} {{'{{'}}.Names{{'}}'}}"
       register: stopped
@@ -18,7 +13,12 @@
       debug:
         msg: |
           Stopped containers:
-          {{ stopped.stdout_lines | join('\n') }}
+          {{ stopped.stdout_lines | join('/n') }}
+    
+    - name: Get stopped containers
+      shell: docker ps -aq -f "status=exited"
+      register: containers
+      changed_when: false
 
     - name: Start all containers
       command: docker start {{ item }}
