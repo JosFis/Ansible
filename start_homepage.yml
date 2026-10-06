@@ -4,6 +4,12 @@
   become: true
   
   tasks:
+    - name: Install Docker Python SDK
+      pip:
+        name:
+          - docker
+        state: present
+        
     - name: Get container information
       community.docker.docker_host_info:
         containers: true
