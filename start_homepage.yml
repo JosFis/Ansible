@@ -2,7 +2,7 @@
 - name: Ensure all Docker containers are running
   hosts: docker
   become: true
-   
+  
   tasks:
     - name: Get container information
       community.docker.docker_host_info:
