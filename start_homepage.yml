@@ -11,9 +11,7 @@
 
     - name: Show stopped containers
       debug:
-        msg: |
-          Stopped containers:
-          {{ stopped.stdout_lines | join(', ') }}
+        var: stopped.stdout_lines
     
     - name: Get stopped containers
       shell: docker ps -aq -f "status=exited"
