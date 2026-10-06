@@ -8,7 +8,7 @@
       community.docker.docker_host_info:
         containers: true
       register: docker_info
-     
+      
     - name: Start stopped containers
       community.docker.docker_container:
         name: "{{ item.Names[0] | regex_replace('^/', '') }}"
