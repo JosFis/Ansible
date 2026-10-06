@@ -1,9 +1,17 @@
 ---
-- hosts: 
-  - 10.10.10.119
-
+- name: Ensure all Docker containers are running
+  hosts: docker
+  become: true
+   
   tasks:
-  - name: Container present
-    community.docker.docker_container:
-      name: homepage
+    - name: Get container information
+      community.docker.docker_host_info:
+      containers: true
+      register: docker_info
+     
+    - name: Start stopped containers
+      community.docker.docker_container:
+      name: "{{ item.Names[0] | regex_replace('^/', '') }}"
       state: started
+      loop: "{{ docker_info.containers }}"
+      when: not item.State.Running
