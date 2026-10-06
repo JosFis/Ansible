@@ -5,7 +5,7 @@
   
   tasks:
     - name: Get all containers
-      shell: docker ps -aq
+      shell: docker ps -aq -f "status=exited"
       register: containers
       changed_when: false
 
@@ -13,4 +13,4 @@
       command: docker start {{ item }}
       loop: "{{ containers.stdout_lines }}"
       register: start_result
-      failed_when: false
+      failed_when: containers.stdout_lines | length > 0
