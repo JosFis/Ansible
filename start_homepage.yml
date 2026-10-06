@@ -1,0 +1,5 @@
+---
+- name: Container present
+  community.docker.docker_container:
+    name: mycontainer
+    state: present
