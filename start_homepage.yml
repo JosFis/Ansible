@@ -6,4 +6,4 @@
   - name: Container present
     community.docker.docker_container:
       name: homepage
-      state: healthy
+      state: started
