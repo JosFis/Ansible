@@ -10,7 +10,7 @@
       changed_when: false
       
     - name: Get stopped containers for logging
-      shell: docker ps -a --filter "status=exited" --format "{{.ID}} {{.Names}}"
+      shell: docker ps -a --filter "status=exited" --format "{{'{{'}}.ID{{'}}'}} {{'{{'}}.Names{{'}}'}}"
       register: stopped
       changed_when: false
 
